@@ -5,38 +5,4 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
 </body>
-<script>
-    function renderCartSummary() {
-        const cartSummary = document.getElementById('cart-summary');
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let total = 0;
-
-        cart.forEach(item => {
-            total += item.price * item.quantity;
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'cart-item';
-            itemDiv.innerHTML = `<div>${item.name} x ${item.quantity}</div><div>$${(item.price * item.quantity).toFixed(2)}</div>`;
-            cartSummary.appendChild(itemDiv);
-        });
-
-        const totalDiv = document.createElement('div');
-        totalDiv.className = 'cart-total';
-        totalDiv.innerHTML = `Total: $${total.toFixed(2)}`;
-        cartSummary.appendChild(totalDiv);
-    }
-
-    document.getElementById('checkout-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        // Simulate server request
-        setTimeout(() => {
-            alert('Purchase completed successfully!');
-            localStorage.removeItem('cart'); // Clear cart after purchase
-            window.location.href = 'index.html'; // Redirect to homepage
-        }, 1000);
-    });
-
-    renderCartSummary();
-</script>
-
 </html>
