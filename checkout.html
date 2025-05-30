@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    header,
+    footer {
+        background-color: #4a90e2;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+    }
+    
+    nav {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 5px 10px;
+        transition: background-color 0.3s;
+    }
+    
+    nav a:hover {
+        background-color: #555;
+    }
+    
+    .checkout-container {
+        flex: 1;
+        padding: 20px;
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    
+    .form-row {
+        margin-bottom: 15px;
+    }
+    
+    .form-row label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .form-row input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    
+    .checkout-btn {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border-radius: 5px;
+        width: 100%;
+    }
+    
+    .checkout-btn:hover {
+        background-color: #218838;
+    }
+    
+    .cart-summary {
+        margin-bottom: 20px;
+    }
+    
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .cart-total {
+        font-weight: bold;
+        text-align: right;
+        margin-top: 10px;
+    }
+    </style>
+    </head>
+<body>
+       <header>
+          Checkout
+       </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+        <a href="account.html">Account</a>
+    </nav>
+    <div class="checkout-container">
+    <div class="cart-summary" id="cart-summary">
+      <!-- Cart summary will be dynamically inserted here -->
+    </div>
+
+     <form id="checkout-form">
+      <div class="form-row">
+       <label for="name">Name:</label>
+         <input type="text" id="name" required>
+      </div>
+
+	<div class="form-row">
+        <label for="email">Email:</label>
+            <input type="email" id="email" required>
+    </div>
+
+	<div class="form-row">
+        <label for="address">Address:</label>
+            <input type="text" id="address" required>
+    </div>
+
+	 <div class="form-row">
+            <label for="card">Credit Card:</label>
+                <input type="text" id="card" required pattern="\d{16}" title="Please enter a valid 16-digit credit card number">
+	</div>
+
+	<button type="submit" class="checkout-btn">Complete Purchase</button>
+    </form>
+</div>
+	<footer>
+        &copy; 2023 Your Company
+    </footer>
+
+    <script>
+    function renderCartSummary() {
+        const cartSummary = document.getElementById('cart-summary');
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let total = 0;
+
+        cart.forEach(item => {
+            total += item.price * item.quantity;
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'cart-item';
+            itemDiv.innerHTML = `<div>${item.name} x ${item.quantity}</div><div>$${(item.price * item.quantity).toFixed(2)}</div>`;
+            cartSummary.appendChild(itemDiv);
+        });
+
+        const totalDiv = document.createElement('div');
+        totalDiv.className = 'cart-total';
+        totalDiv.innerHTML = `Total: $${total.toFixed(2)}`;
+        cartSummary.appendChild(totalDiv);
+    }
+
+    document.getElementById('checkout-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Simulate server request
+        setTimeout(() => {
+            alert('Purchase completed successfully!');
+            localStorage.removeItem('cart'); // Clear cart after purchase
+            window.location.href = 'index.html'; // Redirect to homepage
+        }, 1000);
+    });
+
+    renderCartSummary();
+    </script>
+</body>
+</html>
